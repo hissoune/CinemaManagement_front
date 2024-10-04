@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null); 
+    const [userloading,setUseloading] = useState(true);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('authToken');
@@ -29,7 +30,8 @@ export const AuthProvider = ({ children }) => {
                   
                 });
                 setUser(response.data);
-                
+                 setUseloading(false)
+
                 
             } catch (err) {
                 console.error('Error fetching user profile:', err.response ? err.response.data : err.message);
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, login, logout, loading, error }}>
+        <AuthContext.Provider value={{ token,userloading, user, login, logout, loading, error }}>
             {children}
         </AuthContext.Provider>
     );

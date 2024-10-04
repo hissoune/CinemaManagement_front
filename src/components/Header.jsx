@@ -4,7 +4,7 @@ import Login from '../components/Login';
 import Register from '../components/Register'; 
 
 function Header() {
-    const { token, user } = useContext(AuthContext); // Get user data from context
+    const { token, user } = useContext(AuthContext); 
     const [showPopup, setShowPopup] = useState(false);
     const [isLogin, setIsLogin] = useState(true); 
 
