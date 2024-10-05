@@ -7,7 +7,7 @@ function Landing() {
           <Header />
           
           <section className="bg-no-repeat  bg-cover" style={{ backgroundImage: `url(public/backgroundhome.png)` }}>
-              <div className="h-screen">
+              <div className="h-auto">
                        <Outlet   className="p-16"/>
     
               </div>
