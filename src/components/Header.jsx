@@ -4,7 +4,7 @@ import Login from '../components/Login';
 import Register from '../components/Register'; 
 
 function Header() {
-    const { token, user } = useContext(AuthContext); 
+    const { token,userloading, user } = useContext(AuthContext); 
     const [showPopup, setShowPopup] = useState(false);
     const [isLogin, setIsLogin] = useState(true); 
 
@@ -20,6 +20,9 @@ function Header() {
     const switchToLogin = () => {
         setIsLogin(true); 
     }
+    if (userloading) {
+        return <div>Loading...</div>
+    }
 
     return (
         <div className='bg-[#111010] grid grid-cols-12 gap-2 p-1'>
@@ -32,7 +35,11 @@ function Header() {
                 <ul className="flex justify-around text-2xl text-white">
                     <li>Films</li>
                     <li>Sessions</li>
-                    <li>Reservations</li>
+                    {(user.role == "client") ? <li>Reservations</li>
+                        :
+                        <li></li>
+                }
+                    
                 </ul>
             </div>
             <div className="col-span-2 flex justify-center relative">

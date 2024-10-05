@@ -4,12 +4,14 @@ import Landing from "./pages/Landing";
 import { AuthProvider } from "./context/AuthContext";
 import { SessionProvider } from "./context/SessionsContext";
 import Forbiden from "./pages/Forbiden";  // Fixed the typo here
+import { MoviesProvider } from "./context/MoviesContext";
 // import ProtectedRoutes from "./helpers/ProtectedRoutes";
 
 function App() {
   return (
     <AuthProvider>
       <SessionProvider>
+        <MoviesProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />}>
@@ -24,7 +26,8 @@ function App() {
               <Route path="/forbiden" element={<Forbiden />} />  
             </Route>
           </Routes>
-        </BrowserRouter>
+          </BrowserRouter>
+          </MoviesProvider>
       </SessionProvider>
     </AuthProvider>
   );

@@ -33,7 +33,6 @@ export const SessionProvider = ({ children }) => {
         };
         getSessions(); 
     }, []); 
-             console.log(sessions);
 
     return (
         <SessionsContext.Provider value={{  sessions, session, error }}>
