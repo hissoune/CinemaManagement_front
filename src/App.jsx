@@ -6,10 +6,11 @@ import { SessionProvider } from "./context/SessionsContext";
 import Forbiden from "./pages/Forbiden";  // Fixed the typo here
 import { MoviesProvider } from "./context/MoviesContext";
 import ProfileDetails from "./components/ProfileDetails";
-import Movies from "./components/Movies";
+import Movies from "./pages/Movies";
 import ProtectedRoutes from "./helpers/ProtectedRoutes";
-import MovieDetails from "./components/MovieDetails";
+import MovieDetails from "./pages/MovieDetails";
 import { ReservationProvider } from "./context/ReservationContext";
+import Reservations from "./pages/Reservations";
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
                 />
                   <Route path="/movies/:id"
                 element={<MovieDetails/>}
-                />
+                  />
+                  <Route path="/reservations" element={<Reservations/>}/>
               <Route path="/forbiden" element={<Forbiden />} />  
             </Route>
           </Routes>

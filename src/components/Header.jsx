@@ -35,7 +35,10 @@ function Header() {
                     </Link>
                     <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Sessions</li>
                     {user && user.role === "client" && (
+                        <Link to={'/reservations'}>
                         <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Reservations</li>
+
+                        </Link>
                     )}
                 </ul>
             </div>

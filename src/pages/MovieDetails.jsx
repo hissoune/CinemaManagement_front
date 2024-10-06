@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useContext, useState } from 'react'; 
 import { MoviesContext } from '../context/MoviesContext';
 import { SessionsContext } from '../context/SessionsContext';
-import RoomSeats from './RoomSeats'; 
+import RoomSeats from '../components/RoomSeats'; 
 
 function MovieDetails() {
   const { id } = useParams(); 

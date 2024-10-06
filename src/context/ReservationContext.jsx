@@ -15,18 +15,7 @@ export const ReservationProvider = ({ children }) => {
         if (storedToken) setToken(storedToken);
         
     }, []);
-    const fetchReservations = async () => {
-        try {
-            setReservLoading(true);
-            const response = await axios.get('/api/reservations'); 
-            setReservations(response.data);
-        } catch (err) {
-            console.error("Error fetching reservations:", err);
-            setError(err);
-        } finally {
-            setReservLoading(false);
-        }
-    };
+   
 
     const createReservation = async (reservationData) => {
     try {
@@ -50,14 +39,40 @@ export const ReservationProvider = ({ children }) => {
         setError(err);
     }
 };
-
+    const confirmReservation = async (reservId) => {
+    try {
+        await axios.put(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/confirme/${reservId}`)
+    } catch (err) {
+         console.error('Error creating reservation:', err.response?.data || err.message);
+        setError(err);
+    }
+}
 
     useEffect(() => {
+         const fetchReservations = async () => {
+        try {
+            setReservLoading(true);
+            const response = await axios.get(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations`,
+                            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+            ); 
+            setReservations(response.data);
+        } catch (err) {
+            console.error("Error fetching reservations:", err);
+            setError(err);
+        } finally {
+            setReservLoading(false);
+        }
+    };
         fetchReservations();
-    }, []);
+    }, [token]);
 
     return (
-        <ReservationContext.Provider value={{ reservations, reservLoading, createReservation, error }}>
+        <ReservationContext.Provider value={{ reservations, reservLoading, createReservation, error,confirmReservation }}>
             {children}
         </ReservationContext.Provider>
     );
