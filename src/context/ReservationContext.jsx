@@ -40,13 +40,21 @@ export const ReservationProvider = ({ children }) => {
     }
 };
     const confirmReservation = async (reservId) => {
+    console.log("Attempting to confirm reservation:", reservId);
     try {
-        await axios.put(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/confirme/${reservId}`)
+        const response = await axios.put(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/confirme/${reservId}`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("Reservation confirmed:", response.data); 
     } catch (err) {
-         console.error('Error creating reservation:', err.response?.data || err.message);
+        console.error("Error confirming reservation:", err.response?.data || err.message); 
         setError(err);
     }
-}
+};
+
 
     useEffect(() => {
          const fetchReservations = async () => {

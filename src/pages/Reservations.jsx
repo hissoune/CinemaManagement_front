@@ -2,16 +2,20 @@ import { useContext } from "react";
 import { ReservationContext } from "../context/ReservationContext";
 
 export default function Reservations() {
-    const { reservations, reservLoading } = useContext(ReservationContext);
+    const { reservations, reservLoading ,confirmReservation} = useContext(ReservationContext);
 
     const handleConfirmClick = (reservationId) => {
+        try {
+            confirmReservation(reservationId);
         alert(`Reservation ${reservationId} confirmed`);
-        // You can add logic here to handle the confirmation process (e.g., update reservation status in the backend).
+            window.location.reload();
+        } catch (error) {
+            throw new Error(error)
+        }
     };
 
     const handleCancelClick = (reservationId) => {
         alert(`Reservation ${reservationId} canceled`);
-        // You can add logic here to handle the cancellation process (e.g., update reservation status in the backend).
     };
 
     if (reservLoading) {
@@ -37,8 +41,10 @@ export default function Reservations() {
                                 {reservation.session.room.name} - {new Date(reservation.session.dateTime).toLocaleString()}
                             </div>
                         </div>
+                        {(!reservation.confirmed) ?
                         <div className="mx-6 my-4 flex justify-between items-center">
-                            {/* Confirm Button */}
+                            
+                                
                             <span 
                                 className="bg-green-500 rounded-full p-2 flex items-center space-x-2 cursor-pointer"
                                 onClick={() => handleConfirmClick(reservation._id)}
@@ -48,7 +54,6 @@ export default function Reservations() {
                                 </svg>
                                 <span className="text-white">Confirm</span>
                             </span>
-                            {/* Cancel Button */}
                             <span 
                                 className="bg-red-500 rounded-full p-2 flex items-center space-x-2 cursor-pointer"
                                 onClick={() => handleCancelClick(reservation._id)}
@@ -58,7 +63,12 @@ export default function Reservations() {
                                 </svg>
                                 <span className="text-white mx-1">Cancel</span>
                             </span>
-                        </div>
+                                
+                               
+                            </div>
+                            :
+                             <span className="text-green-600 text-2xl font-bold">reservation confirmed</span>
+                                }
                     </div>
                 ))}
             </div>
