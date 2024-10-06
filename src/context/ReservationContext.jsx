@@ -53,6 +53,21 @@ export const ReservationProvider = ({ children }) => {
         console.error("Error confirming reservation:", err.response?.data || err.message); 
         setError(err);
     }
+    };
+    
+    const cancelReservation = async (reservId) => {
+    try {
+        const response = await axios.delete(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/delete/${reservId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log("Reservation deleted:", response.data); 
+    } catch (err) {
+        console.error("Error deleting reservation:", err.response?.data || err.message); 
+        setError(err);
+    }
 };
 
 
@@ -80,7 +95,7 @@ export const ReservationProvider = ({ children }) => {
     }, [token]);
 
     return (
-        <ReservationContext.Provider value={{ reservations, reservLoading, createReservation, error,confirmReservation }}>
+        <ReservationContext.Provider value={{ reservations, reservLoading, createReservation, error,confirmReservation,cancelReservation }}>
             {children}
         </ReservationContext.Provider>
     );

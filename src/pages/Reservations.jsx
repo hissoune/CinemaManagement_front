@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ReservationContext } from "../context/ReservationContext";
 
 export default function Reservations() {
-    const { reservations, reservLoading ,confirmReservation} = useContext(ReservationContext);
+    const { reservations, reservLoading ,confirmReservation,cancelReservation} = useContext(ReservationContext);
 
     const handleConfirmClick = (reservationId) => {
         try {
@@ -14,9 +14,17 @@ export default function Reservations() {
         }
     };
 
-    const handleCancelClick = (reservationId) => {
+    const handleCancelClick =  (reservationId) => {
+    try {
+         cancelReservation(reservationId); 
         alert(`Reservation ${reservationId} canceled`);
-    };
+                    window.location.reload();
+
+    } catch (error) {
+        console.error("Cancellation failed:", error);
+    }
+};
+
 
     if (reservLoading) {
         return <div>Loading . . .</div>;
