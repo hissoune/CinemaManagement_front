@@ -5,6 +5,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { SessionProvider } from "./context/SessionsContext";
 import Forbiden from "./pages/Forbiden";  // Fixed the typo here
 import { MoviesProvider } from "./context/MoviesContext";
+import ProfileDetails from "./components/ProfileDetails";
 // import ProtectedRoutes from "./helpers/ProtectedRoutes";
 
 function App() {
@@ -22,7 +23,10 @@ function App() {
                     <Home />
                  
                 }
-              />
+                />
+                <Route path="/profile-details"
+                element={<ProfileDetails/>}
+                />
               <Route path="/forbiden" element={<Forbiden />} />  
             </Route>
           </Routes>
