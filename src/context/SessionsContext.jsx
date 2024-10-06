@@ -34,6 +34,7 @@ export const SessionProvider = ({ children }) => {
         getSessions(); 
     }, []); 
 
+    
     return (
         <SessionsContext.Provider value={{  sessions, session, error }}>
             {children}

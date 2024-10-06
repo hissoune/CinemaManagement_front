@@ -47,9 +47,9 @@ function Movies() {
           className="border rounded p-2 mt-2 w-1/3"
         >
           <option value="all">All Genres</option>
-          <option value="action">Action</option>
-          <option value="drama">Drama</option>
-          <option value="comedy">Comedy</option>
+          <option value="Action">Action</option>
+          <option value="Drama">Drama</option>
+          <option value="Comedy">Comedy</option>
         </select>
       </header>
 

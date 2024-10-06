@@ -9,12 +9,14 @@ import ProfileDetails from "./components/ProfileDetails";
 import Movies from "./components/Movies";
 import ProtectedRoutes from "./helpers/ProtectedRoutes";
 import MovieDetails from "./components/MovieDetails";
+import { ReservationProvider } from "./context/ReservationContext";
 
 function App() {
   return (
     <AuthProvider>
       <SessionProvider>
         <MoviesProvider>
+          <ReservationProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />}>
@@ -42,7 +44,8 @@ function App() {
               <Route path="/forbiden" element={<Forbiden />} />  
             </Route>
           </Routes>
-          </BrowserRouter>
+            </BrowserRouter>
+            </ReservationProvider>
           </MoviesProvider>
       </SessionProvider>
     </AuthProvider>
