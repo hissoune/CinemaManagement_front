@@ -64,9 +64,9 @@ export const AuthProvider = ({ children }) => {
             setError(err.response ? err.response.data.message : err.message);
         }
     };
-    const updateUser = async (updateddata) => {
+    // const updateUser = async (updateddata) => {
         
-    }
+    // }
 
     const logout = () => {
         setToken(null);
