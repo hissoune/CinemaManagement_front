@@ -4,12 +4,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { useContext, useState } from "react";
-import { MoviesContext } from "../../context/MoviesContext";
+import { useState } from "react";
+import { useQuery } from '@tanstack/react-query';
+import { fetchMovies } from '../../api/moviApi';
+
 
 function MoviesSlider() {
-  const { moviesloading, movies } = useContext(MoviesContext);
-
+const { data: movies = [], isLoading, error } = useQuery({
+    queryKey: ['movies'],
+    queryFn: fetchMovies 
+  });
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
 
@@ -28,8 +32,11 @@ function MoviesSlider() {
     return matchesSearch && matchesGenre;
   });
 
-  if (moviesloading) {
+  if (isLoading) {
     return <div className="text-white text-center py-10">Loading...</div>;
+  }
+    if (error) {
+    return <h1>{error.message}</h1>
   }
 
   return (

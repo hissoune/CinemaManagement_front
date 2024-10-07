@@ -4,20 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { useContext } from "react";
-import { SessionsContext } from "../../context/SessionsContext";
+import { useQuery } from '@tanstack/react-query';
+import { fetchSessions } from '../../api/sessionsApi';
 
 export default function SessionsSlayder() {
-  const { sessions, loading } = useContext(SessionsContext); // Destructure loading and sessions
+    const { data: sessions, error, isLoading } = useQuery({
+    queryKey: ['sessions'],
+    queryFn: fetchSessions 
+  });
 
-  if (loading) {
+  if (isLoading) {
     return <div className="text-white">Loading...</div>; // Show loading state while fetching data
   }
 
   if (sessions.length === 0) {
     return <div className="text-white">No sessions available.</div>; // Handle no sessions case
   }
-
+ if (error) {
+    return <h1>{error.message}</h1>
+  }
   // Log each session's movie poster image URL
   sessions.forEach(session => {
     console.log(session.movie.posterImage); // This will print the URL for each session's movie

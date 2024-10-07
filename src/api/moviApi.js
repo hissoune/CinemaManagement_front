@@ -7,6 +7,8 @@ export const fetchMovies = async () => {
             'Content-Type': 'application/json',
         },
     });
+    console.log(response.data);
+    
     return response.data;
 };
 

@@ -15,71 +15,70 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Statics from "./pages/Dashboard/Statics";
 import { AdminRoutes } from "./helpers/AdminRoutes";
 import ClientRoutes from "./helpers/ClientRoutes";
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+const queryClient = new QueryClient();
 function App() {
   return (
     <AuthProvider>
-      <SessionProvider>
-        <MoviesProvider>
-          <ReservationProvider>
-            <BrowserRouter>
-               <Routes>
-                   <Route path="/" element={<Landing />}>
-                      <Route
-                            index
-                                element={
-                                    
-                                    <Home />
-                                    
-                                    }
-                          />
-                                    <Route path="/profile-details"
-                                      
-                                      element={
-                                        <ProtectedRoutes>
-                                          <ProfileDetails />
-                                        </ProtectedRoutes>}
-                                    />
-                                    <Route path="/movies"
-                                    element={<Movies/>}
-                                    />
-                                      <Route path="/movies/:id"
+              <QueryClientProvider client={queryClient}>
+                  <ReservationProvider>
+                    <BrowserRouter>
+                      <Routes>
+                          <Route path="/" element={<Landing />}>
+                              <Route
+                                    index
                                         element={
-                                          <ClientRoutes>
-                                          <MovieDetails />
-                                            </ClientRoutes>
-                                        }
-                                      />
-                                      <Route path="/reservations" element={
+                                            
+                                            <Home />
+                                            
+                                            }
+                                  />
+                                            <Route path="/profile-details"
+                                              
+                                              element={
+                                                <ProtectedRoutes>
+                                                  <ProfileDetails />
+                                                </ProtectedRoutes>}
+                                            />
+                                            <Route path="/movies"
+                                            element={<Movies/>}
+                                            />
+                                              <Route path="/movies/:id"
+                                                element={
+                                                  <ClientRoutes>
+                                                  <MovieDetails />
+                                                    </ClientRoutes>
+                                                }
+                                              />
+                                              <Route path="/reservations" element={
 
-                                        <ClientRoutes>
-                                        <Reservations />
-                                          </ClientRoutes>
-                                      
-                                      } />
-                                  <Route path="/forbiden" element={<Forbiden />} />  
-                    </Route>
-                                  
-                                    <Route path="/dashboard" element={
-                                        <AdminRoutes>
-                                        <Dashboard />
-                                        </AdminRoutes>
-                                    }>
-                                      
-                                                <Route index element={
-                                                  <AdminRoutes>
-                                                    <Statics />
-                                                    </AdminRoutes>
-                                                
-                                                } />
+                                                <ClientRoutes>
+                                                <Reservations />
+                                                  </ClientRoutes>
+                                              
+                                              } />
+                                          <Route path="/forbiden" element={<Forbiden />} />  
+                            </Route>
+                                          
+                                            <Route path="/dashboard" element={
+                                                <AdminRoutes>
+                                                <Dashboard />
+                                                </AdminRoutes>
+                                            }>
+                                              
+                                                        <Route index element={
+                                                          <AdminRoutes>
+                                                            <Statics />
+                                                            </AdminRoutes>
+                                                        
+                                                        } />
 
-                                      </Route>
-                                
-                </Routes>
-            </BrowserRouter>
-          </ReservationProvider>
-        </MoviesProvider>
-      </SessionProvider>
+                                              </Route>
+                                        
+                        </Routes>
+                    </BrowserRouter>
+                  </ReservationProvider>
+              </QueryClientProvider>
     </AuthProvider>
   );
 }

@@ -1,13 +1,18 @@
-import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { MoviesContext } from "../context/MoviesContext"; // Ensure to import your context
+import { useQuery } from '@tanstack/react-query';
+import { fetchMovies } from '../api/moviApi'; // Ensure this is correctly imported
+import { useState } from "react";
 
 function Movies() {
-  const { moviesloading, movies } = useContext(MoviesContext);
   const navigate = useNavigate(); 
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
+
+  const { data: movies = [], isLoading, error } = useQuery({
+    queryKey: ['movies'], // Specify the query key
+    queryFn: fetchMovies // Specify the function to fetch data
+  });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -17,19 +22,23 @@ function Movies() {
     setSelectedGenre(e.target.value);
   };
 
+  const handleMovieClick = (id) => {
+    navigate(`/movies/${id}`); 
+  };
+
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenre = selectedGenre === "all" || movie.genre.includes(selectedGenre);
     return matchesSearch && matchesGenre;
   });
 
-  if (moviesloading) {
-    return <div>Loading...</div>; 
+  if (error) {
+    return <h1>{error.message}</h1>
   }
 
-  const handleMovieClick = (id) => {
-    navigate(`/movies/${id}`); 
-  };
+  if (isLoading) {
+    return <div>Loading...</div>; 
+  }
 
   return (
     <div className="p-20 h-screen">
