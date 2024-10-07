@@ -73,7 +73,7 @@ function Movies() {
               backgroundPosition: "center",
               height: "300px",
             }}
-            onClick={() => handleMovieClick(movie._id)} // Add click handler
+            onClick={() => handleMovieClick(movie._id)}
           >
             <div className="bg-black bg-opacity-50 flex flex-col justify-end p-4 h-full">
               <h3 className="text-white text-xl font-bold">{movie.title}</h3>
