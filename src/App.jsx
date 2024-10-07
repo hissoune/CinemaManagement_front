@@ -14,6 +14,7 @@ import Reservations from "./pages/Reservations";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Statics from "./pages/Dashboard/Statics";
 import { AdminRoutes } from "./helpers/AdminRoutes";
+import ClientRoutes from "./helpers/ClientRoutes";
 
 function App() {
   return (
@@ -21,53 +22,63 @@ function App() {
       <SessionProvider>
         <MoviesProvider>
           <ReservationProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Landing />}>
-              <Route
-                index
-                element={
-                 
-                    <Home />
-                 
-                }
-                />
-                <Route path="/profile-details"
-                  
-                  element={
-                    <ProtectedRoutes>
-                      <ProfileDetails />
-                    </ProtectedRoutes>}
-                />
-                 <Route path="/movies"
-                element={<Movies/>}
-                />
-                  <Route path="/movies/:id"
-                element={<MovieDetails/>}
-                  />
-                  <Route path="/reservations" element={<Reservations/>}/>
-              <Route path="/forbiden" element={<Forbiden />} />  
-                </Route>
-              
-                <Route path="/dashboard" element={
-                    <AdminRoutes>
-                    <Dashboard />
-                    </AdminRoutes>
-                }>
-                  
-                            <Route index element={
-                              <AdminRoutes>
-                                <Statics />
-                                </AdminRoutes>
-                            
-                            } />
+            <BrowserRouter>
+               <Routes>
+                   <Route path="/" element={<Landing />}>
+                      <Route
+                            index
+                                element={
+                                    
+                                    <Home />
+                                    
+                                    }
+                          />
+                                    <Route path="/profile-details"
+                                      
+                                      element={
+                                        <ProtectedRoutes>
+                                          <ProfileDetails />
+                                        </ProtectedRoutes>}
+                                    />
+                                    <Route path="/movies"
+                                    element={<Movies/>}
+                                    />
+                                      <Route path="/movies/:id"
+                                        element={
+                                          <ClientRoutes>
+                                          <MovieDetails />
+                                            </ClientRoutes>
+                                        }
+                                      />
+                                      <Route path="/reservations" element={
 
-                  </Route>
-            
-          </Routes>
+                                        <ClientRoutes>
+                                        <Reservations />
+                                          </ClientRoutes>
+                                      
+                                      } />
+                                  <Route path="/forbiden" element={<Forbiden />} />  
+                    </Route>
+                                  
+                                    <Route path="/dashboard" element={
+                                        <AdminRoutes>
+                                        <Dashboard />
+                                        </AdminRoutes>
+                                    }>
+                                      
+                                                <Route index element={
+                                                  <AdminRoutes>
+                                                    <Statics />
+                                                    </AdminRoutes>
+                                                
+                                                } />
+
+                                      </Route>
+                                
+                </Routes>
             </BrowserRouter>
-            </ReservationProvider>
-          </MoviesProvider>
+          </ReservationProvider>
+        </MoviesProvider>
       </SessionProvider>
     </AuthProvider>
   );

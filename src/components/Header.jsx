@@ -40,6 +40,12 @@ function Header() {
 
                         </Link>
                     )}
+                    {user && user.role === "admin" && (
+                        <Link to={'/dashboard'}>
+                        <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Dashboard</li>
+
+                        </Link>
+                    )}
                 </ul>
             </div>
 

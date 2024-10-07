@@ -4,7 +4,7 @@ import { MoviesContext } from "../context/MoviesContext"; // Ensure to import yo
 
 function Movies() {
   const { moviesloading, movies } = useContext(MoviesContext);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
