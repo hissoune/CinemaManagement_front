@@ -13,6 +13,7 @@ import { ReservationProvider } from "./context/ReservationContext";
 import Reservations from "./pages/Reservations";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Statics from "./pages/Dashboard/Statics";
+import { AdminRoutes } from "./helpers/AdminRoutes";
 
 function App() {
   return (
@@ -47,11 +48,22 @@ function App() {
                   <Route path="/reservations" element={<Reservations/>}/>
               <Route path="/forbiden" element={<Forbiden />} />  
                 </Route>
-                <Route path="/dashboard" element={<Dashboard />}>
+              
+                <Route path="/dashboard" element={
+                    <AdminRoutes>
+                    <Dashboard />
+                    </AdminRoutes>
+                }>
                   
-                  <Route index  element={<Statics/>} />
+                            <Route index element={
+                              <AdminRoutes>
+                                <Statics />
+                                </AdminRoutes>
+                            
+                            } />
 
-                </Route>
+                  </Route>
+            
           </Routes>
             </BrowserRouter>
             </ReservationProvider>
