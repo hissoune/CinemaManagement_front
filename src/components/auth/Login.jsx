@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 // eslint-disable-next-line react/prop-types
 function Login({ switchToRegister }) {  
      const [email, setEmail] = useState('');

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function ProfileDetails() {
   const { user, updateUser } = useContext(AuthContext); // Access the user and updateUser function from context

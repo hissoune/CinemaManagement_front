@@ -1,6 +1,6 @@
 
-import MoviesSlider from "../components/MoviesSlider";
-import SessionsSlayder from "../components/SessionsSlayder";
+import MoviesSlider from "../components/movie/MoviesSlider";
+import SessionsSlayder from "../components/session/SessionsSlayder";
 
 
 

@@ -14,7 +14,7 @@ function RoomSeats({ seats, session }) {
     };
     const handleReserveClick = () => {
         try {
-              createReservation({ seats: selectedSeatIndex, session: session._id })
+              createReservation({ seats: selectedSeatIndex+1, session: session._id })
             alert('reservation done !!!');
             window.location.reload();
         } catch (error) {
@@ -39,6 +39,7 @@ function RoomSeats({ seats, session }) {
                 : 'bg-red-500 cursor-not-allowed'}`}
             onClick={() => handleSeatClick(index)}
           >
+            
             <img src="../public/icons8-seat-50.png" alt="seat image" />
           </div>
         ))}

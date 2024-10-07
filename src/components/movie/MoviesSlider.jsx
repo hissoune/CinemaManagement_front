@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useContext, useState } from "react";
-import { MoviesContext } from "../context/MoviesContext";
+import { MoviesContext } from "../../context/MoviesContext";
 
 function MoviesSlider() {
   const { moviesloading, movies } = useContext(MoviesContext);

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 // eslint-disable-next-line react/prop-types
 function Profile({ user }) {

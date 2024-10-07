@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import Login from '../components/Login';
-import Register from '../components/Register';
-import Profile from '../components/Profile';  
+import Login from './auth/Login';
+import Register from './auth/Register';
+import Profile from './auth/Profile';  
 import { Link } from 'react-router-dom';
 
 function Header() {

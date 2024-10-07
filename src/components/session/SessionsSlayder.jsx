@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useContext } from "react";
-import { SessionsContext } from "../context/SessionsContext";
+import { SessionsContext } from "../../context/SessionsContext";
 
 export default function SessionsSlayder() {
   const { sessions, loading } = useContext(SessionsContext); // Destructure loading and sessions

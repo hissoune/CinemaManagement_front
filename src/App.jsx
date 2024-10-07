@@ -5,12 +5,14 @@ import { AuthProvider } from "./context/AuthContext";
 import { SessionProvider } from "./context/SessionsContext";
 import Forbiden from "./pages/Forbiden";  // Fixed the typo here
 import { MoviesProvider } from "./context/MoviesContext";
-import ProfileDetails from "./components/ProfileDetails";
+import ProfileDetails from "./components/auth/ProfileDetails";
 import Movies from "./pages/Movies";
 import ProtectedRoutes from "./helpers/ProtectedRoutes";
 import MovieDetails from "./pages/MovieDetails";
 import { ReservationProvider } from "./context/ReservationContext";
 import Reservations from "./pages/Reservations";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Statics from "./pages/Dashboard/Statics";
 
 function App() {
   return (
@@ -44,7 +46,12 @@ function App() {
                   />
                   <Route path="/reservations" element={<Reservations/>}/>
               <Route path="/forbiden" element={<Forbiden />} />  
-            </Route>
+                </Route>
+                <Route path="/dashboard" element={<Dashboard />}>
+                  
+                  <Route index  element={<Statics/>} />
+
+                </Route>
           </Routes>
             </BrowserRouter>
             </ReservationProvider>
