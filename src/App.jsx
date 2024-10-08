@@ -2,9 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Landing from "./pages/Landing";
 import { AuthProvider } from "./context/AuthContext";
-import { SessionProvider } from "./context/SessionsContext";
 import Forbiden from "./pages/Forbiden";  // Fixed the typo here
-import { MoviesProvider } from "./context/MoviesContext";
 import ProfileDetails from "./components/auth/ProfileDetails";
 import Movies from "./pages/Movies";
 import ProtectedRoutes from "./helpers/ProtectedRoutes";

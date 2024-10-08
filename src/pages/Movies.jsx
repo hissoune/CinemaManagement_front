@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 import { fetchMovies } from '../api/moviApi'; // Ensure this is correctly imported
 import { useState } from "react";
@@ -10,8 +10,8 @@ function Movies() {
   const [selectedGenre, setSelectedGenre] = useState("all");
 
   const { data: movies = [], isLoading, error } = useQuery({
-    queryKey: ['movies'], // Specify the query key
-    queryFn: fetchMovies // Specify the function to fetch data
+    queryKey: ['movies'], 
+    queryFn: fetchMovies
   });
 
   const handleSearchChange = (e) => {
@@ -23,6 +23,7 @@ function Movies() {
   };
 
   const handleMovieClick = (id) => {
+    // Navigate to the movie details page using the movie ID
     navigate(`/movies/${id}`); 
   };
 

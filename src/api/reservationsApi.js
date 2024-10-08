@@ -27,8 +27,10 @@ export const createReservation = async ({ reservationData, token }) => {
     return response.data;
 };
 
-export const confirmReservation = async ({ reservId, token }) => {
-    const response = await axios.put(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/confirme/${reservId}`, {}, {
+export const confirmReservation = async ({ reservationId, token }) => {
+  
+    
+    const response = await axios.put(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/confirme/${reservationId}`,{}, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -37,8 +39,8 @@ export const confirmReservation = async ({ reservId, token }) => {
     return response.data;
 };
 
-export const cancelReservation = async ({ reservId, token }) => {
-    const response = await axios.delete(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/delete/${reservId}`, {
+export const cancelReservation = async ({ reservationId, token }) => {
+    const response = await axios.delete(`${import.meta.env.VITE_EXPRESS_BACKEND}/reservations/delete/${reservationId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

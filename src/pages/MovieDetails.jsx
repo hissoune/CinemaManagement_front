@@ -1,28 +1,47 @@
 import { useParams } from 'react-router-dom';
-import { useContext, useState } from 'react'; 
-import { MoviesContext } from '../context/MoviesContext';
-import { SessionsContext } from '../context/SessionsContext';
+import { useState } from 'react'; 
+
 import RoomSeats from '../components/RoomSeats'; 
+import { useQuery } from '@tanstack/react-query';
+import { getMovieById } from '../api/moviApi';
+import { fetshSessionsByMovieId } from '../api/sessionsApi';
 
 function MovieDetails() {
-  const { id } = useParams(); 
-  const { movies, moviesloading } = useContext(MoviesContext); 
-  const { sessions, loading } = useContext(SessionsContext); 
-
+   const { id } = useParams(); 
   const [isPopupOpen, setIsPopupOpen] = useState(false); 
   const [selectedSession, setSelectedSession] = useState(null);
 
-  if (moviesloading || loading) { 
-    return <div className="text-center py-20">Loading movie details...</div>; 
+
+
+  const { data: movie, isLoading, error } = useQuery({
+    queryKey: ['movie', id],
+    queryFn: () => getMovieById(id),
+    enabled: !!id
+  });
+const { data: sessions, isSessionLoading, Error } = useQuery({
+    queryKey: ['sessions', id],
+    queryFn: () => fetshSessionsByMovieId(id),
+    enabled: !!id
+  });
+  if (isLoading) {
+    return <div className="text-center py-20">Loading movie details...</div>;
   }
 
-  const movie = movies.find((movie) => movie._id === id); 
-
-  if (!movie) {
+  if (error || !movie) {
     return <div className="text-center py-20">Movie not found</div>;
   }
+  if (isSessionLoading) {
+    return <div className="text-center py-20">Loading sessions details...</div>;
+  }
 
-  const movieSessions = sessions.filter(session => session.movie._id === id);
+  if (Error || !sessions) {
+    return <div className="text-center py-20">sessions not found</div>;
+  }
+
+
+ 
+
+ 
 
   const handleReserveClick = (session) => {
     setSelectedSession(session); 
@@ -45,9 +64,9 @@ function MovieDetails() {
 
       <div className="my-8">
         <h2 className="text-center text-3xl font-bold mb-4">Available Sessions</h2>
-        {movieSessions.length > 0 ? (
+        {sessions.length > 0 ? (
           <ul className='border-orange-800 border p-5 my-5'>
-            {movieSessions.map(session => (
+            {sessions.map(session => (
               <div key={session._id} className="flex flex-col rounded-lg bg-slate-800 max-w-96 p-8 my-6 border border-slate-600 shadow-xl">
                 <div className="pb-8 m-0 mb-8 text-center text-slate-100 border-b border-slate-600">
                   <h1 className="flex justify-center gap-1 mt-4 font-bold text-white text-6xl">

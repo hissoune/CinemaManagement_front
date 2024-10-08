@@ -12,31 +12,39 @@ export default function Reservations() {
         }
     }, []);
 
+   
     const { data: reservations, isLoading, error } = useQuery({
         queryKey: ['reservations', token],
         queryFn: () => fetchReservations(token),
         enabled: !!token,
     });
 
-    const handleConfirmClick = async (reservationId) => {
-        try {
-            await confirmReservation(reservationId);
-            alert(`Reservation ${reservationId} confirmed`);
-            window.location.reload();
-        } catch (error) {
-            console.error('Confirmation failed:', error);
-        }
-    };
+ const handleConfirmClick = async (reservationId) => {
+    if (!token) {
+        console.error('No token available');
+        return;
+    }
 
-    const handleCancelClick = async (reservationId) => {
-        try {
-            await cancelReservation(reservationId);
-            alert(`Reservation ${reservationId} canceled`);
-            window.location.reload();
-        } catch (error) {
-            console.error("Cancellation failed:", error);
-        }
-    };
+    try {
+        await confirmReservation({ reservationId, token });
+        alert(`Reservation ${reservationId} confirmed`);
+        window.location.reload();  
+    } catch (error) {
+        console.error('Confirmation failed:', error);
+    }
+};
+
+
+const handleCancelClick = async (reservationId) => {
+    try {
+        await cancelReservation({ reservationId, token });
+        alert(`Reservation ${reservationId} canceled`);
+        window.location.reload();
+    } catch (error) {
+        console.error("Cancellation failed:", error);
+    }
+};
+
 
     if (isLoading) {
         return <div>Loading . . .</div>;
