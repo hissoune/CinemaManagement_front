@@ -104,7 +104,7 @@ function Header() {
 
             <div
                 ref={sidebarRef}
-                className={`fixed top-0 right-0 z-10 w-48 h-full bg-white shadow-lg transition-transform transform ${showSidebar ? 'translate-x-0' : 'translate-x-full'}`}
+                className={`fixed top-0 right-0 z-10 w-96 h-full bg-white shadow-lg transition-transform transform ${showSidebar ? 'translate-x-0' : 'translate-x-full'}`}
                 style={{ transitionDuration: '0.5s' }} 
             >
                 <div className="p-4">

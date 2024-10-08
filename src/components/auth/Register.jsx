@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
-function Register({ switchToLogin }) {  // Accept switchToLogin as a prop
+function Register({ switchToLogin }) {  
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Perform registration action here
         console.log('Register details:', { email, password, confirmPassword });
     };
 
@@ -51,7 +50,7 @@ function Register({ switchToLogin }) {  // Accept switchToLogin as a prop
                 </button>
                 <button
                     type="button"
-                    onClick={switchToLogin}  // Switch to login when clicked
+                    onClick={switchToLogin} 
                     className="bg-gray-500 text-white py-2 px-4 rounded-lg"
                 >
                     Back to Login
