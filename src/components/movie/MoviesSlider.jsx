@@ -47,12 +47,12 @@ function MoviesSlider() {
           placeholder="Search movies by title..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="p-3 w-1/2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-400 bg-white"
+          className="border rounded-md p-3 w-full sm:w-1/3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
         <select
           value={selectedGenre}
           onChange={handleGenreChange}
-          className="p-3 w-1/4 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-400 bg-white"
+          className="border rounded-md p-3 w-full sm:w-1/3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="all">All Genres</option>
           <option value="Action">Action</option>
@@ -114,7 +114,6 @@ function MoviesSlider() {
             ))}
           </Swiper>
 
-          {/* Navigation buttons */}
           <div className="absolute top-1/2 left-5 transform -translate-y-1/2 button-prev-movie-slide z-10">
             <button className="bg-yellow-500 text-white rounded-full p-3 hover:bg-yellow-400 transition">
               Prev

@@ -16,7 +16,7 @@ export default function SessionsSlider() {
     return <div className="text-white"><Loading/></div>; 
   }
 
-  if (sessions.length === 0) {
+  if (!sessions || sessions.length === 0) {
     return <div className="text-white">No sessions available.</div>; 
   }
 
@@ -29,6 +29,7 @@ export default function SessionsSlider() {
       <Swiper
         modules={[Navigation, Autoplay]}
         loop={true}
+         spaceBetween={30}
         slidesPerView={1}
         autoplay={{
           delay: 3000,
@@ -41,31 +42,26 @@ export default function SessionsSlider() {
           prevEl: ".button-prev-slide",
         }}
         breakpoints={{
-          1440: { slidesPerView: 1 },
+          1440: { slidesPerView: 3 },
           1024: { slidesPerView: 2 },
           768: { slidesPerView: 2 },
           640: { slidesPerView: 1 },
         }}
       >
-        {sessions.map((session, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-              <img
-                className="w-full h-64 object-cover"
-                src={`http://localhost:3000/uploads/${session.movie.posterImage}`}
-                alt={session.movie.title}
+        {sessions.map((session) => (
+          <SwiperSlide key={session.id}>
+            <div className="bg-gradient-to-b  from-gray-800 to-gray-700 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+              <img 
+                className="w-full h-72 object-cover" 
+                src={`http://localhost:3000/uploads/${session.movie.posterImage}`} 
+                alt={session.movie.title} 
               />
-
-              <div className="p-6">
-                <h1 className="text-2xl font-bold text-white hover:text-green-400 transition duration-300 mb-2">{session.movie.title}</h1>
-                <p className="text-gray-300 mb-4">
-                  {session.movie.description.length > 100
-                    ? session.movie.description.substring(0, 100) + "..."
-                    : session.movie.description}
-                </p>
+              <div className="p-4">
+                <h3 className="text-xl font-semibold text-white">{session.movie.title}</h3>
+                <p className="text-gray-300">{new Date(session.dateTime).toLocaleString()}</p>
                 <p className="text-lg text-gray-200"><strong>Room:</strong> {session.room.name}</p>
                 <p className="text-lg text-gray-200"><strong>Price:</strong> ${session.price}</p>
-                <p className="text-lg text-gray-200"><strong>Date & Time:</strong> {new Date(session.dateTime).toLocaleString()}</p>
+              
               </div>
 
               <div className="absolute top-1/2 left-4 transform -translate-y-1/2 button-prev-slide">
