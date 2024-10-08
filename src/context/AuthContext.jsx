@@ -62,28 +62,32 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const register = async (userData) => {
-        try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_EXPRESS_BACKEND}/auth/register`,
-                userData,
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                }
-            );
-
-            if (response.data.token) {
-                setToken(response.data.token);
-                localStorage.setItem('authToken', response.data.token);
-                window.location.reload();
-            } else {
-                throw new Error('No token received from the server');
+   const register = async (userData) => {
+    try {
+        const response = await axios.post(
+            `${import.meta.env.VITE_EXPRESS_BACKEND}/auth/register`,
+            {
+                name: userData.name,
+                email: userData.email,
+                password: userData.password
+            },
+            {
+                headers: { 'Content-Type': 'application/json' },
             }
-        } catch (err) {
-            console.error('Registration error:', err.response ? err.response.data : err.message);
-            setError(err.response ? err.response.data.message : err.message);
+        );
+
+        if (response.data.token) { 
+            setToken(response.data.token);
+            localStorage.setItem('authToken', response.data.token);
+            window.location.reload(); 
+        } else {
+            throw new Error('No token received from the server');
         }
-    };
+    } catch (err) {
+        console.error('Registration error:', err.response ? err.response.data : err.message);
+        setError(err.response ? err.response.data.message : err.message);
+    }
+};
 
     const logout = () => {
         setToken(null);
