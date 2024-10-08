@@ -39,7 +39,7 @@ function Sessions() {
         {sessions.map((session) => (
           <div key={session.id} className="bg-gradient-to-b from-gray-800 to-gray-700 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
             <img 
-              src={session.movie.posterImage} 
+              src={`http://localhost:3000/uploads/${session.movie.posterImage}`} 
               alt={session.movie.title} 
               className="w-full h-72 object-cover"
             />

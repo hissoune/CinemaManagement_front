@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null); 
-    const [userloading,setUseloading] = useState(true);
+    const [userloading, setUseloading] = useState(true);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('authToken');
@@ -27,12 +27,9 @@ export const AuthProvider = ({ children }) => {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`, 
                     },
-                  
                 });
                 setUser(response.data);
-                 setUseloading(false)
-
-                
+                setUseloading(false);
             } catch (err) {
                 console.error('Error fetching user profile:', err.response ? err.response.data : err.message);
                 setError(err.response ? err.response.data.message : err.message);
@@ -64,9 +61,29 @@ export const AuthProvider = ({ children }) => {
             setError(err.response ? err.response.data.message : err.message);
         }
     };
-    // const updateUser = async (updateddata) => {
-        
-    // }
+
+    const register = async (userData) => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_EXPRESS_BACKEND}/auth/register`,
+                userData,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            );
+
+            if (response.data.token) {
+                setToken(response.data.token);
+                localStorage.setItem('authToken', response.data.token);
+                window.location.reload();
+            } else {
+                throw new Error('No token received from the server');
+            }
+        } catch (err) {
+            console.error('Registration error:', err.response ? err.response.data : err.message);
+            setError(err.response ? err.response.data.message : err.message);
+        }
+    };
 
     const logout = () => {
         setToken(null);
@@ -75,7 +92,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ token,userloading, user, login, logout, loading, error }}>
+        <AuthContext.Provider value={{ token, userloading, user, login, logout, loading, error, register }}>
             {children}
         </AuthContext.Provider>
     );
