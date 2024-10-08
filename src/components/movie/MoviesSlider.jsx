@@ -2,19 +2,17 @@ import "swiper/css";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import { useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { fetchMovies } from '../../api/moviApi';
 import Loading from "../Loading";
 
-
 function MoviesSlider() {
-const { data: movies = [], isLoading, error } = useQuery({
+  const { data: movies = [], isLoading, error } = useQuery({
     queryKey: ['movies'],
     queryFn: fetchMovies 
   });
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
 
@@ -29,31 +27,32 @@ const { data: movies = [], isLoading, error } = useQuery({
   // Updated filtering logic to handle array of genres
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesGenre = selectedGenre === "all" || movie.genre.includes(selectedGenre); // Checks if genre array includes the selected genre
+    const matchesGenre = selectedGenre === "all" || movie.genre.includes(selectedGenre);
     return matchesSearch && matchesGenre;
   });
 
   if (isLoading) {
     return <div className="text-white text-center py-10"><Loading/></div>;
   }
-    if (error) {
-    return <h1>{error.message}</h1>
+  
+  if (error) {
+    return <h1 className="text-white text-center">{error.message}</h1>;
   }
 
   return (
-    <div className="w-full flex flex-col justify-center items-center overflow-visible">
+    <div className="w-full flex flex-col justify-center items-center bg-gradient-to-b from-gray-800 to-gray-900 overflow-hidden">
       <div className="w-[80%] flex justify-between items-center my-4">
         <input
           type="text"
           placeholder="Search movies by title..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="p-2 w-1/2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-400"
+          className="p-3 w-1/2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-400 bg-white"
         />
         <select
           value={selectedGenre}
           onChange={handleGenreChange}
-          className="p-2 w-1/4 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-400"
+          className="p-3 w-1/4 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-yellow-400 bg-white"
         >
           <option value="all">All Genres</option>
           <option value="Action">Action</option>
@@ -63,7 +62,7 @@ const { data: movies = [], isLoading, error } = useQuery({
         </select>
       </div>
 
-      <div className="w-[80%] my-10 rounded-2xl">
+      <div className="w-[80%] my-10 rounded-2xl bg-gray-800 p-4">
         <div className="relative w-full py-10">
           <Swiper
             modules={[Navigation, Autoplay]}
@@ -81,7 +80,7 @@ const { data: movies = [], isLoading, error } = useQuery({
             }}
             speed={600}
             breakpoints={{
-              1448: { slidesPerView: 3, spaceBetween: 30 },
+              1440: { slidesPerView: 3, spaceBetween: 30 },
               1024: { slidesPerView: 2, spaceBetween: 20 },
               768: { slidesPerView: 2, spaceBetween: 10 },
               480: { slidesPerView: 1, spaceBetween: 5 },
@@ -89,25 +88,24 @@ const { data: movies = [], isLoading, error } = useQuery({
           >
             {filteredMovies.map((movie, index) => (
               <SwiperSlide key={index}>
-                <div className="bg-slate-300 shadow-lg overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
+                <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
                   <div className="relative h-[80%]">
                     <img
                       className="w-full h-96 object-cover"
                       src={movie.posterImage}
                       alt={movie.title}
                     />
-                    <div className="absolute bottom-3 left-2 bg-yellow-400 text-white text-2xl font-bold px-2 py-1 rounded-full">
+                    <div className="absolute bottom-3 left-2 bg-yellow-500 text-white text-lg font-bold px-2 py-1 rounded-full shadow-md">
                       {movie.rating}/10
                     </div>
                   </div>
 
                   <div className="p-4">
-                    <h2 className="text-xl font-bold text-gray-800 truncate">{movie.title}</h2>
-
-                    <div className="flex justify-between items-center text-gray-400 mt-1 text-2xl">
-                      <span>{new Date(movie.releaseDate).toLocaleDateString()}</span>
-                      <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-lg">
-                        {movie.genre.join(", ")} {/* Displaying multiple genres */}
+                    <h2 className="text-xl font-bold text-white truncate">{movie.title}</h2>
+                    <div className="flex justify-between items-center text-gray-400 mt-1">
+                      <span className="text-sm">{new Date(movie.releaseDate).toLocaleDateString()}</span>
+                      <span className="bg-gray-700 text-gray-300 px-2 py-1 rounded-lg text-sm">
+                        {movie.genre.join(", ")}
                       </span>
                     </div>
                   </div>
@@ -118,12 +116,12 @@ const { data: movies = [], isLoading, error } = useQuery({
 
           {/* Navigation buttons */}
           <div className="absolute top-1/2 left-5 transform -translate-y-1/2 button-prev-movie-slide z-10">
-            <button className="bg-gray-800 text-white rounded-full p-3 hover:bg-gray-700 transition">
+            <button className="bg-yellow-500 text-white rounded-full p-3 hover:bg-yellow-400 transition">
               Prev
             </button>
           </div>
           <div className="absolute top-1/2 right-5 transform -translate-y-1/2 button-next-movie-slide z-10">
-            <button className="bg-gray-800 text-white rounded-full p-3 hover:bg-gray-700 transition">
+            <button className="bg-yellow-500 text-white rounded-full p-3 hover:bg-yellow-400 transition">
               Next
             </button>
           </div>
