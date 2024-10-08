@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchReservations, confirmReservation, cancelReservation } from '../api/reservationsApi';
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../components/Loading";
 
 export default function Reservations() {
     const [token, setToken] = useState(null);
@@ -47,10 +48,9 @@ const handleCancelClick = async (reservationId) => {
 
 
     if (isLoading) {
-        return <div>Loading . . .</div>;
+        return <div><Loading/></div>;
     }
 
-    // Ensure that `reservations` is defined and an array
     if (!reservations || reservations.length === 0) {
         return <div>No reservations available.</div>;
     }

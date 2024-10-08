@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import Login from './auth/Login';
 import Register from './auth/Register';
@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom';
 
 function Header() {
     const { token, user } = useContext(AuthContext); 
-    const [showPopup, setShowPopup] = useState(false);
+    const [showSidebar, setShowSidebar] = useState(false);
     const [isLogin, setIsLogin] = useState(true); 
+    const sidebarRef = useRef(null); 
+
     const handleAccountClick = () => {
-        setShowPopup(prev => !prev); 
+        setShowSidebar(prev => !prev); 
     };
 
     const switchToRegister = () => {
@@ -21,54 +23,105 @@ function Header() {
         setIsLogin(true);
     };
 
+    const handleClickOutside = (event) => {
+        if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+            setShowSidebar(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className='bg-[#111010] grid grid-cols-12 gap-2 p-1'>
-            <div className="banner col-span-2 flex justify-center overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out">
-                <img src="public/logoimge.png" className='rounded-full' alt="logo" />
-            </div>
-
-            <div className="col-span-8 p-4">
-                <ul className="flex gap-20 text-4xl font-bold text-white ">
-                    <Link to={'/movies'} >
-                    <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Movies</li>
-
-                    </Link>
-                    <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Sessions</li>
-                    {user && user.role === "client" && (
-                        <Link to={'/reservations'}>
-                        <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Reservations</li>
-
-                        </Link>
-                    )}
-                    {user && user.role === "admin" && (
-                        <Link to={'/dashboard'}>
-                        <li className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out'>Dashboard</li>
-
-                        </Link>
-                    )}
-                </ul>
-            </div>
-
-            <div className="col-span-2 flex justify-center relative">
-                <div className='cursor-pointer overflow-hidden transform transition-transform hover:scale-105 duration-300 ease-in-out' onClick={handleAccountClick}>
-                    <img src="public/userIcon.png" alt="user icon" />
-                </div>
-
-                {showPopup && (
-                    <div className="absolute top-24 right-10 z-10 bg-white p-4 shadow-lg rounded-lg">
-                        {token ? (  
-                            <Profile user={user} />
-                        ) : (  
-                            isLogin ? (
-                                <Login switchToRegister={switchToRegister} />  
+        <nav className="bg-gray-800">
+            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+                <div className="relative flex h-16 items-center justify-between">
+                    <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                        <button
+                            type="button"
+                            className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            aria-controls="mobile-menu"
+                            aria-expanded={showSidebar}
+                            onClick={handleAccountClick}
+                        >
+                            <span className="sr-only">Open main menu</span>
+                            {showSidebar ? (
+                                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
                             ) : (
-                                <Register switchToLogin={switchToLogin} /> 
-                            )
-                        )}
+                                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                                </svg>
+                            )}
+                        </button>
                     </div>
-                )}
+                    <div className="flex flex-1 items-center justify-between">
+                        <div className="flex-shrink-0">
+                            <img className="h-8 w-auto" src="public/logoimge.png" alt="Your Company" />
+                        </div>
+                        <div className="hidden sm:block">
+                            <div className="flex space-x-4">
+                                <Link to="/movies" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                    Movies
+                                </Link>
+                                <Link to="/sessions" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                    Sessions
+                                </Link>
+                                {user && user.role === "client" && (
+                                    <Link to="/reservations" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                        Reservations
+                                    </Link>
+                                )}
+                                {user && user.role === "admin" && (
+                                    <Link to="/dashboard" className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                                        Dashboard
+                                    </Link>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                        <div className="relative ml-3">
+                            <button
+                                type="button"
+                                className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                                id="user-menu-button"
+                                aria-expanded="false"
+                                aria-haspopup="true"
+                                onClick={handleAccountClick}
+                            >
+                                <img className="h-8 w-8 rounded-full" src="public/userIcon.png" alt="User Icon" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+
+            <div
+                ref={sidebarRef}
+                className={`fixed top-0 right-0 z-10 w-48 h-full bg-white shadow-lg transition-transform transform ${showSidebar ? 'translate-x-0' : 'translate-x-full'}`}
+                style={{ transitionDuration: '0.5s' }} 
+            >
+                <div className="p-4">
+                    {showSidebar ? (
+                        token ? (
+                            <Profile user={user} />
+                        ) : (
+                            isLogin ? (
+                                <Login switchToRegister={switchToRegister} />
+                            ) : (
+                                <Register switchToLogin={switchToLogin} />
+                            )
+                        )
+                    ) : null}
+                </div>
+            </div>
+        </nav>
     );
 }
 

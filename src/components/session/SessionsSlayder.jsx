@@ -6,6 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useQuery } from '@tanstack/react-query';
 import { fetchSessions } from '../../api/sessionsApi';
+import Loading from "../Loading";
 
 export default function SessionsSlayder() {
     const { data: sessions, error, isLoading } = useQuery({
@@ -14,18 +15,17 @@ export default function SessionsSlayder() {
   });
 
   if (isLoading) {
-    return <div className="text-white">Loading...</div>; // Show loading state while fetching data
+    return <div className="text-white"><Loading/></div>; 
   }
 
   if (sessions.length === 0) {
-    return <div className="text-white">No sessions available.</div>; // Handle no sessions case
+    return <div className="text-white">No sessions available.</div>; 
   }
  if (error) {
     return <h1>{error.message}</h1>
   }
-  // Log each session's movie poster image URL
   sessions.forEach(session => {
-    console.log(session.movie.posterImage); // This will print the URL for each session's movie
+    console.log(session.movie.posterImage); 
   });
 
   return (

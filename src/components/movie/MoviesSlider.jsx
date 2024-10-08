@@ -7,6 +7,7 @@ import "swiper/css/scrollbar";
 import { useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { fetchMovies } from '../../api/moviApi';
+import Loading from "../Loading";
 
 
 function MoviesSlider() {
@@ -33,7 +34,7 @@ const { data: movies = [], isLoading, error } = useQuery({
   });
 
   if (isLoading) {
-    return <div className="text-white text-center py-10">Loading...</div>;
+    return <div className="text-white text-center py-10"><Loading/></div>;
   }
     if (error) {
     return <h1>{error.message}</h1>

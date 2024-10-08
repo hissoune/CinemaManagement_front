@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
 import { fetchMovies } from '../api/moviApi'; // Ensure this is correctly imported
 import { useState } from "react";
+import Loading from "../components/Loading";
 
 function Movies() {
   const navigate = useNavigate(); 
@@ -38,7 +39,7 @@ function Movies() {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>; 
+    return <div><Loading/></div>; 
   }
 
   return (

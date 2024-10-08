@@ -14,6 +14,7 @@ import Statics from "./pages/Dashboard/Statics";
 import { AdminRoutes } from "./helpers/AdminRoutes";
 import ClientRoutes from "./helpers/ClientRoutes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Sessions from "./pages/Sessions";
 const queryClient = new QueryClient();
 function App() {
   return (
@@ -54,10 +55,13 @@ function App() {
                                                 <Reservations />
                                                   </ClientRoutes>
                                               
-                                              } />
-                                          <Route path="/forbiden" element={<Forbiden />} />  
+                } />
+                <Route path="/sessions" element={
+                  <Sessions/>
+                } />
+                                           
                             </Route>
-                                          
+                                          <Route path="/forbiden" element={<Forbiden />} /> 
                                             <Route path="/dashboard" element={
                                                 <AdminRoutes>
                                                 <Dashboard />

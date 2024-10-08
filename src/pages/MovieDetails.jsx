@@ -5,6 +5,7 @@ import RoomSeats from '../components/RoomSeats';
 import { useQuery } from '@tanstack/react-query';
 import { getMovieById } from '../api/moviApi';
 import { fetshSessionsByMovieId } from '../api/sessionsApi';
+import Loading from '../components/Loading';
 
 function MovieDetails() {
    const { id } = useParams(); 
@@ -24,14 +25,14 @@ const { data: sessions, isSessionLoading, Error } = useQuery({
     enabled: !!id
   });
   if (isLoading) {
-    return <div className="text-center py-20">Loading movie details...</div>;
+    return <div className="text-center py-20"><Loading/></div>;
   }
 
   if (error || !movie) {
     return <div className="text-center py-20">Movie not found</div>;
   }
   if (isSessionLoading) {
-    return <div className="text-center py-20">Loading sessions details...</div>;
+    return <div className="text-center py-20"><Loading/></div>;
   }
 
   if (Error || !sessions) {
